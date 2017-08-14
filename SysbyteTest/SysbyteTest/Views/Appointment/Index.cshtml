@@ -1,0 +1,70 @@
+﻿@using SysbyteTest.Models
+@model SysbyteTest.Models.ChkDayTimeViewModel 
+   
+
+@{
+    ViewBag.Title = "Index";
+  //  Layout = "~/Views/_ViewStart.cshtml";
+}
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<h2>Select Day and Time</h2>
+@using (Html.BeginForm())
+{
+    <table>
+        <tr>
+            <h4>Select Day</h4>
+            <td>
+                @foreach(DayModel daymodel in Model.dayInfo)
+                {
+                    @Html.CheckBox("chbDay",false, daymodel.DayId)@Html.Label(daymodel.DayName)
+                }
+              
+        </td>
+    </tr>
+</table>
+    <h4>Select Time</h4>
+    <ul style="list-style-type:none">
+        <li>
+           @foreach(TimeModel timeModel in Model.timeInfo)
+           {
+               @Html.CheckBox("chbTime",false,timeModel.TimeId)@Html.Label(timeModel.Time)<br />
+           }
+        </li>
+    </ul>
+    <div id="dialog" title="Basic Dialog">
+      
+        @Html.Label("fname","Firstname: ")
+        @Html.TextBoxFor(m=>m.appointmodel.firstName)<br />
+        @Html.Label("mobile","Mobile: ")
+        @Html.TextBoxFor(m=>m.appointmodel.mobile)<br />
+        @Html.Label("Email","Email: ")
+        @Html.TextBoxFor(m=>m.appointmodel.email)<br />
+         
+          <input type="submit" value="Save" id="btnSubmit" class="btn btn-default" />
+       
+    </div>
+    <div></div>
+
+    //jquery for after select checkbox it display dialog box
+    <script>
+        $(document).ready(function () {
+            $('input[type="checkbox"]').click(function () {
+                if ($(this).is(":checked")) {
+                    //alert("Checkbox is checked.");
+                    $("#dialog").dialog();
+                }
+                else if ($(this).is(":not(:checked)")) {
+                    alert("Please select checkbox");
+                }
+            });
+        });
+        //var countChecked = function () {
+        //    debugger
+        //    var n = $("input:checked").length;
+        //    $("div").text(n + (n === 1 ? "is" : "are") + "checked");
+        //};
+        //countChecked();
+        //$("input[type=checkbox]").on("click", countChecked);
+    </script>
+}
+

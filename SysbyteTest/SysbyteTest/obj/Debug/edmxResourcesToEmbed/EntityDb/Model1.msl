@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TestDbModelStoreContainer" CdmEntityContainer="TestDbEntities">
+    <EntitySetMapping Name="tblAppointments">
+      <EntityTypeMapping TypeName="TestDbModel.tblAppointment">
+        <MappingFragment StoreEntitySet="tblAppointment">
+          <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Days_Id" ColumnName="Days_Id" />
+          <ScalarProperty Name="Time_Id" ColumnName="Time_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblDays">
+      <EntityTypeMapping TypeName="TestDbModel.tblDay">
+        <MappingFragment StoreEntitySet="tblDay">
+          <ScalarProperty Name="Days_Id" ColumnName="Days_Id" />
+          <ScalarProperty Name="Days_Name" ColumnName="Days_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblTimes">
+      <EntityTypeMapping TypeName="TestDbModel.tblTime">
+        <MappingFragment StoreEntitySet="tblTime">
+          <ScalarProperty Name="Time_Id" ColumnName="Time_Id" />
+          <ScalarProperty Name="TIme" ColumnName="TIme" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

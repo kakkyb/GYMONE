@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblAppointment">
+    <Key>
+      <PropertyRef Name="AppointmentId" />
+    </Key>
+    <Property Name="AppointmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Mobile" Type="bigint" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Days_Id" Type="int" Nullable="false" />
+    <Property Name="Time_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblDay">
+    <Key>
+      <PropertyRef Name="Days_Id" />
+    </Key>
+    <Property Name="Days_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Days_Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblTime">
+    <Key>
+      <PropertyRef Name="Time_Id" />
+    </Key>
+    <Property Name="Time_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TIme" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tblAppointment_tblDay">
+    <End Role="tblDay" Type="Self.tblDay" Multiplicity="1" />
+    <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblDay">
+        <PropertyRef Name="Days_Id" />
+      </Principal>
+      <Dependent Role="tblAppointment">
+        <PropertyRef Name="Days_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAppointment_tblTime">
+    <End Role="tblTime" Type="Self.tblTime" Multiplicity="1" />
+    <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTime">
+        <PropertyRef Name="Time_Id" />
+      </Principal>
+      <Dependent Role="tblAppointment">
+        <PropertyRef Name="Time_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TestDbModelStoreContainer">
+    <EntitySet Name="tblAppointment" EntityType="Self.tblAppointment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblDay" EntityType="Self.tblDay" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTime" EntityType="Self.tblTime" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tblAppointment_tblDay" Association="Self.FK_tblAppointment_tblDay">
+      <End Role="tblDay" EntitySet="tblDay" />
+      <End Role="tblAppointment" EntitySet="tblAppointment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAppointment_tblTime" Association="Self.FK_tblAppointment_tblTime">
+      <End Role="tblTime" EntitySet="tblTime" />
+      <End Role="tblAppointment" EntitySet="tblAppointment" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

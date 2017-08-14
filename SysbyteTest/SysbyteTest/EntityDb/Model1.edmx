@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TestDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblAppointment">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+          </Key>
+          <Property Name="AppointmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Mobile" Type="bigint" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Days_Id" Type="int" Nullable="false" />
+          <Property Name="Time_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblDay">
+          <Key>
+            <PropertyRef Name="Days_Id" />
+          </Key>
+          <Property Name="Days_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Days_Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblTime">
+          <Key>
+            <PropertyRef Name="Time_Id" />
+          </Key>
+          <Property Name="Time_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TIme" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblAppointment_tblDay">
+          <End Role="tblDay" Type="Self.tblDay" Multiplicity="1" />
+          <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDay">
+              <PropertyRef Name="Days_Id" />
+            </Principal>
+            <Dependent Role="tblAppointment">
+              <PropertyRef Name="Days_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAppointment_tblTime">
+          <End Role="tblTime" Type="Self.tblTime" Multiplicity="1" />
+          <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTime">
+              <PropertyRef Name="Time_Id" />
+            </Principal>
+            <Dependent Role="tblAppointment">
+              <PropertyRef Name="Time_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestDbModelStoreContainer">
+          <EntitySet Name="tblAppointment" EntityType="Self.tblAppointment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDay" EntityType="Self.tblDay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTime" EntityType="Self.tblTime" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblAppointment_tblDay" Association="Self.FK_tblAppointment_tblDay">
+            <End Role="tblDay" EntitySet="tblDay" />
+            <End Role="tblAppointment" EntitySet="tblAppointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAppointment_tblTime" Association="Self.FK_tblAppointment_tblTime">
+            <End Role="tblTime" EntitySet="tblTime" />
+            <End Role="tblAppointment" EntitySet="tblAppointment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblAppointment">
+          <Key>
+            <PropertyRef Name="AppointmentId" />
+          </Key>
+          <Property Name="AppointmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Mobile" Type="Int64" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Days_Id" Type="Int32" Nullable="false" />
+          <Property Name="Time_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblDay" Relationship="Self.FK_tblAppointment_tblDay" FromRole="tblAppointment" ToRole="tblDay" />
+          <NavigationProperty Name="tblTime" Relationship="Self.FK_tblAppointment_tblTime" FromRole="tblAppointment" ToRole="tblTime" />
+        </EntityType>
+        <EntityType Name="tblDay">
+          <Key>
+            <PropertyRef Name="Days_Id" />
+          </Key>
+          <Property Name="Days_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Days_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblAppointments" Relationship="Self.FK_tblAppointment_tblDay" FromRole="tblDay" ToRole="tblAppointment" />
+        </EntityType>
+        <EntityType Name="tblTime">
+          <Key>
+            <PropertyRef Name="Time_Id" />
+          </Key>
+          <Property Name="Time_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TIme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblAppointments" Relationship="Self.FK_tblAppointment_tblTime" FromRole="tblTime" ToRole="tblAppointment" />
+        </EntityType>
+        <Association Name="FK_tblAppointment_tblDay">
+          <End Role="tblDay" Type="Self.tblDay" Multiplicity="1" />
+          <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDay">
+              <PropertyRef Name="Days_Id" />
+            </Principal>
+            <Dependent Role="tblAppointment">
+              <PropertyRef Name="Days_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAppointment_tblTime">
+          <End Role="tblTime" Type="Self.tblTime" Multiplicity="1" />
+          <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTime">
+              <PropertyRef Name="Time_Id" />
+            </Principal>
+            <Dependent Role="tblAppointment">
+              <PropertyRef Name="Time_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblAppointments" EntityType="Self.tblAppointment" />
+          <EntitySet Name="tblDays" EntityType="Self.tblDay" />
+          <EntitySet Name="tblTimes" EntityType="Self.tblTime" />
+          <AssociationSet Name="FK_tblAppointment_tblDay" Association="Self.FK_tblAppointment_tblDay">
+            <End Role="tblDay" EntitySet="tblDays" />
+            <End Role="tblAppointment" EntitySet="tblAppointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAppointment_tblTime" Association="Self.FK_tblAppointment_tblTime">
+            <End Role="tblTime" EntitySet="tblTimes" />
+            <End Role="tblAppointment" EntitySet="tblAppointments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestDbModelStoreContainer" CdmEntityContainer="TestDbEntities">
+          <EntitySetMapping Name="tblAppointments">
+            <EntityTypeMapping TypeName="TestDbModel.tblAppointment">
+              <MappingFragment StoreEntitySet="tblAppointment">
+                <ScalarProperty Name="AppointmentId" ColumnName="AppointmentId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Days_Id" ColumnName="Days_Id" />
+                <ScalarProperty Name="Time_Id" ColumnName="Time_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDays">
+            <EntityTypeMapping TypeName="TestDbModel.tblDay">
+              <MappingFragment StoreEntitySet="tblDay">
+                <ScalarProperty Name="Days_Id" ColumnName="Days_Id" />
+                <ScalarProperty Name="Days_Name" ColumnName="Days_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTimes">
+            <EntityTypeMapping TypeName="TestDbModel.tblTime">
+              <MappingFragment StoreEntitySet="tblTime">
+                <ScalarProperty Name="Time_Id" ColumnName="Time_Id" />
+                <ScalarProperty Name="TIme" ColumnName="TIme" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

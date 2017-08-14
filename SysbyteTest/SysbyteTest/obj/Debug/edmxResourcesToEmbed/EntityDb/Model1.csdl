@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblAppointment">
+    <Key>
+      <PropertyRef Name="AppointmentId" />
+    </Key>
+    <Property Name="AppointmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mobile" Type="Int64" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Days_Id" Type="Int32" Nullable="false" />
+    <Property Name="Time_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tblDay" Relationship="Self.FK_tblAppointment_tblDay" FromRole="tblAppointment" ToRole="tblDay" />
+    <NavigationProperty Name="tblTime" Relationship="Self.FK_tblAppointment_tblTime" FromRole="tblAppointment" ToRole="tblTime" />
+  </EntityType>
+  <EntityType Name="tblDay">
+    <Key>
+      <PropertyRef Name="Days_Id" />
+    </Key>
+    <Property Name="Days_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Days_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tblAppointments" Relationship="Self.FK_tblAppointment_tblDay" FromRole="tblDay" ToRole="tblAppointment" />
+  </EntityType>
+  <EntityType Name="tblTime">
+    <Key>
+      <PropertyRef Name="Time_Id" />
+    </Key>
+    <Property Name="Time_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TIme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tblAppointments" Relationship="Self.FK_tblAppointment_tblTime" FromRole="tblTime" ToRole="tblAppointment" />
+  </EntityType>
+  <Association Name="FK_tblAppointment_tblDay">
+    <End Role="tblDay" Type="Self.tblDay" Multiplicity="1" />
+    <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblDay">
+        <PropertyRef Name="Days_Id" />
+      </Principal>
+      <Dependent Role="tblAppointment">
+        <PropertyRef Name="Days_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblAppointment_tblTime">
+    <End Role="tblTime" Type="Self.tblTime" Multiplicity="1" />
+    <End Role="tblAppointment" Type="Self.tblAppointment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTime">
+        <PropertyRef Name="Time_Id" />
+      </Principal>
+      <Dependent Role="tblAppointment">
+        <PropertyRef Name="Time_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TestDbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblAppointments" EntityType="Self.tblAppointment" />
+    <EntitySet Name="tblDays" EntityType="Self.tblDay" />
+    <EntitySet Name="tblTimes" EntityType="Self.tblTime" />
+    <AssociationSet Name="FK_tblAppointment_tblDay" Association="Self.FK_tblAppointment_tblDay">
+      <End Role="tblDay" EntitySet="tblDays" />
+      <End Role="tblAppointment" EntitySet="tblAppointments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblAppointment_tblTime" Association="Self.FK_tblAppointment_tblTime">
+      <End Role="tblTime" EntitySet="tblTimes" />
+      <End Role="tblAppointment" EntitySet="tblAppointments" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
